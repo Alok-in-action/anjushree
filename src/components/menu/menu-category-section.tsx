@@ -1,3 +1,4 @@
+
 import type { MenuCategory as MenuCategoryType } from '@/data/menu';
 import { MenuItemCard } from './menu-item-card';
 
@@ -7,7 +8,7 @@ interface MenuCategorySectionProps {
 
 export function MenuCategorySection({ category }: MenuCategorySectionProps) {
   return (
-    <section id={category.id} className="py-8 scroll-mt-48" aria-labelledby={`${category.id}-heading`}>
+    <section id={category.id} className="py-8 scroll-mt-52" aria-labelledby={`${category.id}-heading`}>
       <div className="flex items-center mb-6">
         <category.Icon className="h-8 w-8 mr-3 text-primary" />
         <h2 id={`${category.id}-heading`} className="text-3xl font-headline tracking-tight text-primary">

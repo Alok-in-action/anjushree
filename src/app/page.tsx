@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -15,6 +16,8 @@ export default function HomePage() {
   const [activeCategoryId, setActiveCategoryId] = React.useState<string | null>(menuData[0]?.id || null);
   const [showScrollTop, setShowScrollTop] = React.useState(false);
 
+  // Note: sectionRefs is not currently used for scrolling to sections after this change.
+  // It was likely for a previous implementation. Can be removed if not used elsewhere.
   const sectionRefs = React.useRef<(HTMLElement | null)[]>([]);
 
   React.useEffect(() => {
@@ -51,16 +54,9 @@ export default function HomePage() {
     setActiveCategoryId(categoryId);
     const element = document.getElementById(categoryId);
     if (element) {
-      // Calculate offset for fixed/sticky headers
-      // AppHeader (5rem) + Sticky Nav/Search container (approx 3.5rem for nav + 3.5rem for search = 7rem)
-      // Total offset approx 5rem + 7rem = 12rem or specific value
-      const offset = (16 * 5) + (16 * 7); // 5rem header + 7rem (nav+search)
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - offset + 32; // Extra 32px for breathing room
-
-      window.scrollTo({
-        top: offsetPosition,
+      element.scrollIntoView({
         behavior: 'smooth',
+        block: 'start', // This will respect the scroll-margin-top of the target element
       });
     }
   };
@@ -113,8 +109,8 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <AppHeader />
-      <div className="pt-20"> {/* Offset for fixed AppHeader */}
-        <div className="sticky top-20 z-40 bg-background shadow-lg">
+      <div className="pt-20"> {/* Offset for fixed AppHeader (h-20 is 5rem) */}
+        <div className="sticky top-20 z-40 bg-background shadow-lg"> {/* top-20 ensures it's below AppHeader */}
           <CategoryNav
             categories={menuData} /* Always show all categories for navigation */
             activeCategoryId={activeCategoryId}
@@ -127,7 +123,7 @@ export default function HomePage() {
         
         <main className="container mx-auto px-4 py-6">
           {filteredMenuData.length > 0 ? (
-            filteredMenuData.map((category, index) => (
+            filteredMenuData.map((category) => (
               <MenuCategorySection
                 key={category.id}
                 category={category}
