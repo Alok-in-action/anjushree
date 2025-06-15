@@ -2,7 +2,7 @@
 import type { LucideIcon } from 'lucide-react';
 import {
   Soup, Sparkles, ChefHat, Bean, Wheat, UtensilsCrossed, Salad, CakeSlice, Coffee, // Base food/drink icons
-  Blend, List, GlassWater, Beer, Wine, Martini, CupSoda // Specific/additional icons
+  Blend, List, GlassWater, Beer, Wine, Martini, CupSoda, Flame // Specific/additional icons (Flame added for spicy)
 } from 'lucide-react';
 
 export interface MenuItem {
@@ -10,6 +10,7 @@ export interface MenuItem {
   name: string;
   price: string;
   description?: string;
+  indicator?: 'healthy' | 'spicy' | 'chefSpecial';
 }
 
 export interface MenuCategory {
@@ -25,11 +26,11 @@ export const menuData: MenuCategory[] = [
     name: "SOUP & SHORBA",
     Icon: Soup,
     items: [
-      { id: "ss-1", name: "Broccoli & tossed Pine nut Shorba", price: "220", description: "Infused broccoli mixed with pine nuts, cumin seeds & Indian herbs" },
+      { id: "ss-1", name: "Broccoli & tossed Pine nut Shorba", price: "220", description: "Infused broccoli mixed with pine nuts, cumin seeds & Indian herbs", indicator: 'healthy' },
       { id: "ss-2", name: "Mulligatwany", price: "220", description: "Lentils based Indian specialty shorba" },
       { id: "ss-3", name: "Tomato Rasam", price: "220", description: "Fresh Tomato broth with cumin, curry leaves & Tamarind" },
-      { id: "ss-4", name: "Bhatti Da Tamatar Dhania Shorba", price: "220", description: "Indian Traditional Tomato Broth Flavored with Coriander" },
-      { id: "ss-5", name: "Subz Ka Shorba", price: "220", description: "Garden fresh vegetables broth, cumin seed & Indian herbs" },
+      { id: "ss-4", name: "Bhatti Da Tamatar Dhania Shorba", price: "220", description: "Indian Traditional Tomato Broth Flavored with Coriander", indicator: 'spicy' },
+      { id: "ss-5", name: "Subz Ka Shorba", price: "220", description: "Garden fresh vegetables broth, cumin seed & Indian herbs", indicator: 'healthy' },
       { id: "ss-6", name: "Thupka", price: "220", description: "Signature of Northeast" },
     ],
   },
@@ -38,22 +39,22 @@ export const menuData: MenuCategory[] = [
     name: "APPETIZERS",
     Icon: Sparkles,
     items: [
-      { id: "app-1", name: "Amritsari Paneer Tikka", price: "425", description: "Cottage Cheese marinated with our tangy spices cooked in clay oven" },
+      { id: "app-1", name: "Amritsari Paneer Tikka", price: "425", description: "Cottage Cheese marinated with our tangy spices cooked in clay oven", indicator: 'spicy' },
       { id: "app-2", name: "Paneer Pudina Tikka", price: "425", description: "Cottage cheese coated with fresh paste of ground mint leaves & other spices cooked in clay oven" },
-      { id: "app-3", name: "Paneer Kali Mirch Tikka", price: "425", description: "Dices of Cottage Cheese Marinated in Indian spices, sprinkled with crushed black pepper" },
+      { id: "app-3", name: "Paneer Kali Mirch Tikka", price: "425", description: "Dices of Cottage Cheese Marinated in Indian spices, sprinkled with crushed black pepper", indicator: 'spicy' },
       { id: "app-4", name: "Tandoori Soya Chap Afghani / Achari", price: "450", description: "Marinated Soya Chaap in Chef’s own spices & Hung Curd Cooked in Tandoor" },
       { id: "app-5", name: "Kaju Mutter Ki Shami", price: "350", description: "Cashew Crusted green peas kebab cooked on slow flame" },
-      { id: "app-6", name: "Soya Chili Chap Dry", price: "350", description: "Fried Soya Cubes Tossed in sweet, sour, spicy sauce" },
+      { id: "app-6", name: "Soya Chili Chap Dry", price: "350", description: "Fried Soya Cubes Tossed in sweet, sour, spicy sauce", indicator: 'spicy' },
       { id: "app-7", name: "Bharwan Mushroom", price: "375", description: "Farm fresh cheese stuffed mushrooms" },
       { id: "app-8", name: "Vegetable Kebab Platter", price: "525", description: "Chef’s daily recommendation of three succulent kebabs" },
       { id: "app-9", name: "Subz Akhrot Seekh Kebab", price: "350", description: "Skewered seasonal vegetables & walnut cooked in tandoor" },
       { id: "app-10", name: "Hara Bhara Cheesy Kebab", price: "325", description: "Delicate Cheese stuffed green patties, pan grilled in butter" },
-      { id: "app-11", name: "Subz Galouti Kebab", price: "325", description: "Assorted Vegetables sautéed with Awadhi spices cooked on tawa served with Shirmal" },
+      { id: "app-11", name: "Subz Galouti Kebab", price: "325", description: "Assorted Vegetables sautéed with Awadhi spices cooked on tawa served with Shirmal", indicator: 'chefSpecial' },
       { id: "app-12", name: "Dahi Ke Kebab", price: "325", description: "Hang Curd mixed with Cottage cheese & bread crumbs with chef special spices" },
       { id: "app-13", name: "Healthy Spicy Chef Special", price: "325", description: "" },
       { id: "app-14", name: "Bharwan Aloo", price: "350", description: "Potatoes Stuffed With Dry Fruits & Anardana, Finished on Clay Oven" },
-      { id: "app-15", name: "Beetroot Kebab", price: "375", description: "Beetroot kebab naturally moist with all the nutrition, cooked on tawa, served with mint chutney" },
-      { id: "app-16", name: "Tandoori Phool", price: "375", description: "Broccoli marinated in creamy yoghurt & selected hand ground spices cooked in tandoor" },
+      { id: "app-15", name: "Beetroot Kebab", price: "375", description: "Beetroot kebab naturally moist with all the nutrition, cooked on tawa, served with mint chutney", indicator: 'chefSpecial' },
+      { id: "app-16", name: "Tandoori Phool", price: "375", description: "Broccoli marinated in creamy yoghurt & selected hand ground spices cooked in tandoor", indicator: 'healthy' },
     ],
   },
   {
@@ -61,35 +62,35 @@ export const menuData: MenuCategory[] = [
     name: "MAIN COURSE",
     Icon: ChefHat,
     items: [
-      { id: "mc-1", name: "Vilayati subz Kadhai", price: "550", description: "English Vegetable cooked in chef special kadhai masala" },
+      { id: "mc-1", name: "Vilayati subz Kadhai", price: "550", description: "English Vegetable cooked in chef special kadhai masala", indicator: 'chefSpecial' },
       { id: "mc-2", name: "Ras Bhari Kofta", price: "400", description: "Homemade cheese dumpling rich in chef special gravy" },
-      { id: "mc-3", name: "Paneer Keema Masala", price: "425", description: "Very fine chopped cottage cheese tempered in Indian spices" },
-      { id: "mc-4", name: "Soya Chaap Masala", price: "425", description: "Deep Fried Soya Chaap marinated in yogurt masala & added in tomato onion gravy" },
+      { id: "mc-3", name: "Paneer Keema Masala", price: "425", description: "Very fine chopped cottage cheese tempered in Indian spices", indicator: 'spicy' },
+      { id: "mc-4", name: "Soya Chaap Masala", price: "425", description: "Deep Fried Soya Chaap marinated in yogurt masala & added in tomato onion gravy", indicator: 'spicy' },
       { id: "mc-5", name: "Mushroom Matar Hara Pyaz", price: "425", description: "Mushroom, peas & spring onion come together to make delightful dish" },
       { id: "mc-6", name: "Bhuna Palak Paneer", price: "400", description: "Cottage cheese dices cooked with spinach, in Indian traditional spices" },
-      { id: "mc-7", name: "Subz teen mirch masala", price: "500", description: "Assorted vegetables cooked with red/black/green chili" },
-      { id: "mc-8", name: "Subz Begam Bahar", price: "425", description: "Cheesy dry nuts stuffed pepper served over chef special gravy" },
+      { id: "mc-7", name: "Subz teen mirch masala", price: "500", description: "Assorted vegetables cooked with red/black/green chili", indicator: 'spicy' },
+      { id: "mc-8", name: "Subz Begam Bahar", price: "425", description: "Cheesy dry nuts stuffed pepper served over chef special gravy", indicator: 'chefSpecial' },
       { id: "mc-9", name: "Vegetable Nargisi Kofta", price: "425", description: "Cottage cheese with Mash Vegetables" },
       { id: "mc-10", name: "Paneer Khurchan", price: "400", description: "Cottage cheese cooked in tangy gravy with capsicum, tomato and onion flakes" },
       { id: "mc-11", name: "Amchuri Bhindi Do Pyaza", price: "400", description: "Lady finger tossed twice with onions and tangy tomato gravy" },
-      { id: "mc-12", name: "Shahi Soya Korma", price: "400", description: "Soya chunk cooked in creamy based gravy" },
-      { id: "mc-13", name: "Dum Aloo Chatniwala", price: "425", description: "Fancy cut fried potatoes cooked with mint, coriander" },
-      { id: "mc-14", name: "Paneer Punjabi", price: "400", description: "Creamy cottage cheese cooked with julienne of capsicum and onion" },
+      { id: "mc-12", name: "Shahi Soya Korma", price: "400", description: "Soya chunk cooked in creamy based gravy", indicator: 'chefSpecial' },
+      { id: "mc-13", name: "Dum Aloo Chatniwala", price: "425", description: "Fancy cut fried potatoes cooked with mint, coriander", indicator: 'spicy' },
+      { id: "mc-14", name: "Paneer Punjabi", price: "400", description: "Creamy cottage cheese cooked with julienne of capsicum and onion", indicator: 'spicy' },
       { id: "mc-15", name: "Subz Nizami Handi", price: "475", description: "A rare combination of fresh vegetables cooked in handi" },
-      { id: "mc-16", name: "Kaju Curry", price: "400", description: "Cashew Nuts cooked in royal rich gravy" },
+      { id: "mc-16", name: "Kaju Curry", price: "400", description: "Cashew Nuts cooked in royal rich gravy", indicator: 'healthy' },
       { id: "mc-17", name: "Methi Matar Malai", price: "425", description: "Fried Fresh fenugreek & kasuri methi and green peas cooked in creamy gravy" },
       { id: "mc-18", name: "Paneer Makhani", price: "375", description: "Chunks of cottage cheese cooked in rich smooth makhan gravy" },
       { id: "mc-19", name: "Bhindi Bhurji / Kurmuri Bhindi", price: "425", description: "Cooked as home style / Deep fried crispy okra" },
-      { id: "mc-20", name: "Paneer takatak", price: "350", description: "Clay oven cooked homemade cheese processed chef special Indian masalas" },
+      { id: "mc-20", name: "Paneer takatak", price: "350", description: "Clay oven cooked homemade cheese processed chef special Indian masalas", indicator: 'spicy' },
       { id: "mc-21", name: "Aloo Corn Capsicum Masala", price: "400", description: "Potato, Corn & bell peppers cooked in onion & tomato gravy" },
       { id: "mc-22", name: "Hare Masala Ka Bhuna Paneer", price: "400", description: "Diced cottage cheese fried & cooked in mint & coriander gravy" },
-      { id: "mc-23", name: "Ratlami Sev Tamatar (Local)", price: "375", description: "Combination of Traditional tomato based bhaji with sev" },
+      { id: "mc-23", name: "Ratlami Sev Tamatar (Local)", price: "375", description: "Combination of Traditional tomato based bhaji with sev", indicator: 'spicy' },
       { id: "mc-24", name: "Palak Apki Pasand", price: "375", description: "Corn/ Aloo / Lehsooni / Kofta" },
       { id: "mc-25", name: "Subz Apki Pasand", price: "375", description: "Mix Veg/ Kolhapuri / Kadhai / Jalfrezi / Handi" },
       { id: "mc-26", name: "Aloo methi / Aloo jeera", price: "350", description: "Boiled Potatoes tossed with fenugreek or cumin seed" },
       { id: "mc-27", name: "Dum Aloo Banarasi", price: "375", description: "Stuffed Potato cooked in rich delicious gravy" },
       { id: "mc-28", name: "Aloo Gobhi Adraki / Matar Tamatar", price: "375", description: "Cauliflower Preparation in Indian spices with Ginger Julienne / Tomato & Green Peas" },
-      { id: "mc-29", name: "Pindi Chole", price: "350", description: "Chickpea cooked in Punjabi khada spices in traditionally Punjabi style" },
+      { id: "mc-29", name: "Pindi Chole", price: "350", description: "Chickpea cooked in Punjabi khada spices in traditionally Punjabi style", indicator: 'spicy' },
       { id: "mc-30", name: "Aloo Payaz ki Subzi", price: "375", description: "Potatoes & black seed onion cooked with chef special spices" },
       { id: "mc-31", name: "Navratan Korma", price: "400", description: "Combination of nine fresh garden vegetables cooked in nawabi rich White gravy" },
     ],
@@ -99,13 +100,13 @@ export const menuData: MenuCategory[] = [
     name: "PULSES",
     Icon: Bean,
     items: [
-      { id: "pls-1", name: "Punjabi Rajma", price: "325", description: "Red kidney beans with Indian spices cooked in Punjabi home style" },
+      { id: "pls-1", name: "Punjabi Rajma", price: "325", description: "Red kidney beans with Indian spices cooked in Punjabi home style", indicator: 'spicy' },
       { id: "pls-2", name: "Ghar ki Kadhi", price: "300", description: "" },
       { id: "pls-3", name: "Dal Arhar Lasooni", price: "300", description: "Arhar lentils cooked with yellow chilies" },
-      { id: "pls-4", name: "Dal Palak", price: "300", description: "Arhar dal cooked with spinach" },
-      { id: "pls-5", name: "Handi Dal", price: "325", description: "" },
-      { id: "pls-6", name: "Dal E Aroma", price: "300", description: "Black lentils, tomatoes, ginger and garlic simmered overnight on slow charcoal fire and finished with cream" },
-      { id: "pls-7", name: "Dal Panchmel", price: "275", description: "Five types of lentils flavored with onion & garlic cooked Malwa style" },
+      { id: "pls-4", name: "Dal Palak", price: "300", description: "Arhar dal cooked with spinach", indicator: 'healthy' },
+      { id: "pls-5", name: "Handi Dal", price: "325", description: "", indicator: 'spicy' },
+      { id: "pls-6", name: "Dal E Aroma", price: "300", description: "Black lentils, tomatoes, ginger and garlic simmered overnight on slow charcoal fire and finished with cream", indicator: 'chefSpecial' },
+      { id: "pls-7", name: "Dal Panchmel", price: "275", description: "Five types of lentils flavored with onion & garlic cooked Malwa style", indicator: 'spicy' },
     ],
   },
   {
@@ -120,7 +121,7 @@ export const menuData: MenuCategory[] = [
       { id: "ib-5", name: "Roomali Roti (Plain/Butter)", price: "65/70" },
       { id: "ib-6", name: "Missi Roti ( Plain /Butter)", price: "60/65" },
       { id: "ib-7", name: "Cheese Naan", price: "95" },
-      { id: "ib-8", name: "Warqi Paratha", price: "100" },
+      { id: "ib-8", name: "Warqi Paratha", price: "100", indicator: 'chefSpecial' },
       { id: "ib-9", name: "Khasta Roti", price: "95" },
       { id: "ib-10", name: "Family Basket", price: "275" },
     ],
@@ -147,8 +148,8 @@ export const menuData: MenuCategory[] = [
       { id: "sl-2", name: "Kachumber Salad", price: "160", description: "Cucumber, tomato, onion" },
       { id: "sl-3", name: "Onion Salad", price: "120", description: "" },
       { id: "sl-4", name: "Chatpata Chana Salad", price: "220", description: "Homemade chickpea tangy salad" },
-      { id: "sl-5", name: "Hara Moong Salad", price: "220", description: "Sprouted Moong mix with chopped onion, tomato, green chilli, lemon Juice & Chat Masala" },
-      { id: "sl-6", name: "Punjabi Salad", price: "155", description: "Fresh Vegetables Cut in Finger size" },
+      { id: "sl-5", name: "Hara Moong Salad", price: "220", description: "Sprouted Moong mix with chopped onion, tomato, green chilli, lemon Juice & Chat Masala", indicator: 'healthy' },
+      { id: "sl-6", name: "Punjabi Salad", price: "155", description: "Fresh Vegetables Cut in Finger size", indicator: 'healthy' },
     ],
   },
   {
@@ -156,8 +157,8 @@ export const menuData: MenuCategory[] = [
     name: "RAITA",
     Icon: Blend,
     items: [
-      { id: "rt-1", name: "Raita of Your Choice", price: "130", description: "" },
-      { id: "rt-2", name: "Subz Ka Raita", price: "160", description: "Assorted vegetables yoghurt" },
+      { id: "rt-1", name: "Raita of Your Choice", price: "130", description: "", indicator: 'healthy' },
+      { id: "rt-2", name: "Subz Ka Raita", price: "160", description: "Assorted vegetables yoghurt", indicator: 'healthy' },
       { id: "rt-3", name: "Boondi Raita", price: "160", description: "Homemade Boondi served over Indian spiced curd" },
       { id: "rt-4", name: "Mewa Makhana Raita", price: "220", description: "Dry fruits enriched yoghurt" },
       { id: "rt-5", name: "Ananas Raita", price: "220", description: "Preserved Pineapple Served in Slightly Sweet curd" },
@@ -210,7 +211,7 @@ export const menuData: MenuCategory[] = [
   {
     id: "beverages-selection",
     name: "BEVERAGES SELECTION",
-    Icon: GlassWater, // Placeholder, as no items
+    Icon: GlassWater, 
     items: [],
   },
   {
@@ -331,7 +332,7 @@ export const menuData: MenuCategory[] = [
   {
     id: "rum",
     name: "RUM",
-    Icon: Wine, // Using Wine as a generic alcohol icon
+    Icon: Wine, 
     items: [
       { id: "rm-1", name: "BACARDI BLACK", price: "175" },
       { id: "rm-2", name: "BACARDI CARTA BLANCA", price: "175" },
@@ -393,7 +394,7 @@ export const menuData: MenuCategory[] = [
   {
     id: "tequilla",
     name: "TEQUILLA",
-    Icon: Wine, // Using a generic spirit icon
+    Icon: Wine, 
     items: [
       { id: "tq-1", name: "SAUZA GOLD", price: "425" },
       { id: "tq-2", name: "SAUZA SILVER", price: "425" },
@@ -426,7 +427,7 @@ export const menuData: MenuCategory[] = [
   {
     id: "classic-cocktails",
     name: "CLASSIC COCKTAILS",
-    Icon: CupSoda, // Replaced Cocktail
+    Icon: CupSoda,
     items: [
       { id: "cc-1", name: "LONG BEACH ICE TEA", price: "500", description: "Vodka, gin, tequila, white rum, triple sec, lime juice and topped up with cranberry juice" },
       { id: "cc-2", name: "GREEN GODDNESS", price: "425", description: "Gin, lime, simple syrup, mint leaves" },

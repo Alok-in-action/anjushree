@@ -8,7 +8,7 @@ import { SearchBar } from '@/components/menu/search-bar';
 import { MenuCategorySection } from '@/components/menu/menu-category-section';
 import { menuData, type MenuCategory as MenuCategoryType } from '@/data/menu';
 import { Button } from '@/components/ui/button';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, Heart, Flame, ChefHat } from 'lucide-react';
 
 export default function HomePage() {
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -19,26 +19,20 @@ export default function HomePage() {
   React.useEffect(() => {
     const lowerSearchTerm = searchTerm.toLowerCase();
 
-    if (!lowerSearchTerm) { // Case: search is empty (initial load or cleared)
+    if (!lowerSearchTerm) { 
       setFilteredMenuData(menuData);
-      // Ensure 'activeCategoryId' is set to the first category from the full 'menuData'.
-      // This will correct any overrides by the IntersectionObserver if the page loaded
-      // in a way that a different category was initially intersecting.
       if (menuData.length > 0) {
-        // Only call setActiveCategoryId if it's not already the correct one, to avoid potential loops/extra renders.
         if (activeCategoryId !== menuData[0].id) {
           setActiveCategoryId(menuData[0].id);
         }
       } else {
-        // If menuData is empty, ensure activeCategoryId is null.
         if (activeCategoryId !== null) {
           setActiveCategoryId(null);
         }
       }
-      return; // Early return after handling the empty search term case.
+      return; 
     }
 
-    // Case: search term is present
     const filtered = menuData
       .map(category => ({
         ...category,
@@ -52,22 +46,17 @@ export default function HomePage() {
     
     setFilteredMenuData(filtered);
 
-    // After filtering, if the current 'activeCategoryId' is not in the 'filtered' list,
-    // or if 'activeCategoryId' was null, set it to the first category in 'filtered'.
-    // If 'filtered' is empty, set 'activeCategoryId' to null.
     if (filtered.length > 0) {
       const currentActiveCategoryIsInFiltered = filtered.some(c => c.id === activeCategoryId);
       if (!currentActiveCategoryIsInFiltered) {
         setActiveCategoryId(filtered[0].id);
       }
-      // If currentActiveCategoryIsInFiltered is true, we don't change activeCategoryId here.
-      // The IntersectionObserver will handle updates based on scroll for already visible categories.
-    } else { // No items in filtered results
+    } else { 
       if (activeCategoryId !== null) {
         setActiveCategoryId(null);
       }
     }
-  }, [searchTerm, menuData, activeCategoryId]); // menuData is stable, activeCategoryId is read and conditionally set.
+  }, [searchTerm, activeCategoryId]); 
 
   const handleSelectCategory = (categoryId: string) => {
     setActiveCategoryId(categoryId);
@@ -151,6 +140,15 @@ export default function HomePage() {
               <li>Our Standard Measure - 30Ml (for beverages).</li>
             </ul>
             <p className="mt-3 text-sm">Government Taxes as applicable.</p>
+          </div>
+
+          <div className="p-4 mb-6 border rounded-md bg-card shadow-sm text-card-foreground">
+            <h3 className="text-lg font-headline mb-2 text-primary">Legend</h3>
+            <ul className="list-none space-y-1 text-sm">
+              <li className="flex items-center"><Heart className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" /> Healthy</li>
+              <li className="flex items-center"><Flame className="h-4 w-4 text-red-500 mr-2 flex-shrink-0" /> Spicy</li>
+              <li className="flex items-center"><ChefHat className="h-4 w-4 text-blue-500 mr-2 flex-shrink-0" /> Chef Special</li>
+            </ul>
           </div>
 
           {filteredMenuData.length > 0 ? (
