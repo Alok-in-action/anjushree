@@ -125,6 +125,7 @@ export default function HomePage() {
               <li>Once order is placed, please allow us 20-25 minutes to prepare.</li>
               <li>Additional time may be indicated for bulk orders.</li>
               <li>Jain option is available but requested to communicate with server.</li>
+              <li>Our Standard Measure - 30Ml.</li>
             </ul>
             <p className="mt-3 text-sm">Government Taxes as applicable.</p>
           </div>
