@@ -22,7 +22,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased bg-background text-foreground flex flex-col flex-grow">
-        <div className="flex-grow">
+        <div className="flex-grow mb-4">
           {children}
         </div>
         <AppFooter />
