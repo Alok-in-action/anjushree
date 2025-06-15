@@ -16,18 +16,14 @@ export default function HomePage() {
   const [activeCategoryId, setActiveCategoryId] = React.useState<string | null>(menuData[0]?.id || null);
   const [showScrollTop, setShowScrollTop] = React.useState(false);
 
-  // Note: sectionRefs is not currently used for scrolling to sections after this change.
-  // It was likely for a previous implementation. Can be removed if not used elsewhere.
-  const sectionRefs = React.useRef<(HTMLElement | null)[]>([]);
-
-  React.useEffect(() => {
-    sectionRefs.current = menuData.map((_, i) => sectionRefs.current[i] || React.createRef<HTMLElement>().current);
-  }, []);
-  
   React.useEffect(() => {
     const lowerSearchTerm = searchTerm.toLowerCase();
     if (!lowerSearchTerm) {
       setFilteredMenuData(menuData);
+      // If clearing search, reset active category to the first overall category if it exists
+      if (menuData.length > 0 && activeCategoryId !== menuData[0].id) {
+         // setActiveCategoryId(menuData[0].id); // Commented out to prevent jump on clear
+      }
       return;
     }
 
@@ -56,7 +52,7 @@ export default function HomePage() {
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
-        block: 'start', // This will respect the scroll-margin-top of the target element
+        block: 'start', 
       });
     }
   };
@@ -64,8 +60,8 @@ export default function HomePage() {
   React.useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: "-40% 0px -60% 0px", // Adjust to detect when section is roughly in middle
-      threshold: 0, // Trigger when any part of the section enters/leaves the rootMargin window
+      rootMargin: "-40% 0px -60% 0px", 
+      threshold: 0, 
     };
 
     const observerCallback: IntersectionObserverCallback = (entries) => {
@@ -88,7 +84,7 @@ export default function HomePage() {
         if (section) observer.unobserve(section);
       });
     };
-  }, [filteredMenuData]); // Rerun when filteredMenuData changes
+  }, [filteredMenuData]);
 
   React.useEffect(() => {
     const checkScrollTop = () => {
@@ -107,12 +103,12 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col flex-1"> {/* Changed min-h-screen to flex-1 to work with layout footer */}
       <AppHeader />
-      <div className="pt-20"> {/* Offset for fixed AppHeader (h-20 is 5rem) */}
-        <div className="sticky top-20 z-40 bg-background shadow-lg"> {/* top-20 ensures it's below AppHeader */}
+      <div className="pt-20"> 
+        <div className="sticky top-20 z-40 bg-background shadow-lg"> 
           <CategoryNav
-            categories={menuData} /* Always show all categories for navigation */
+            categories={menuData} 
             activeCategoryId={activeCategoryId}
             onSelectCategory={handleSelectCategory}
           />
