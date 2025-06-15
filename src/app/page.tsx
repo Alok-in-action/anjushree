@@ -52,9 +52,9 @@ export default function HomePage() {
     const element = document.getElementById(categoryId);
     if (element) {
       // Calculate offset for fixed/sticky headers
-      // AppHeader (4rem) + Sticky Nav/Search container (approx 3.5rem for nav + 3.5rem for search = 7rem)
-      // Total offset approx 4rem + 7rem = 11rem or specific value
-      const offset = (16 * 4) + (16 * 7); // 4rem header + 7rem (nav+search)
+      // AppHeader (5rem) + Sticky Nav/Search container (approx 3.5rem for nav + 3.5rem for search = 7rem)
+      // Total offset approx 5rem + 7rem = 12rem or specific value
+      const offset = (16 * 5) + (16 * 7); // 5rem header + 7rem (nav+search)
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition - offset + 32; // Extra 32px for breathing room
 
@@ -113,8 +113,8 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <AppHeader />
-      <div className="pt-16"> {/* Offset for fixed AppHeader */}
-        <div className="sticky top-16 z-40 bg-background shadow-lg">
+      <div className="pt-20"> {/* Offset for fixed AppHeader */}
+        <div className="sticky top-20 z-40 bg-background shadow-lg">
           <CategoryNav
             categories={menuData} /* Always show all categories for navigation */
             activeCategoryId={activeCategoryId}

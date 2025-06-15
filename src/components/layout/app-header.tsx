@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export function AppHeader() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-primary text-primary-foreground shadow-lg">
+    <header className="fixed top-0 left-0 right-0 z-50 h-20 bg-primary text-primary-foreground shadow-lg">
       <div className="container mx-auto flex h-full items-center justify-center px-4">
         <Link href="/" className="flex items-center">
           <Image
