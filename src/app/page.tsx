@@ -8,7 +8,7 @@ import { SearchBar } from '@/components/menu/search-bar';
 import { MenuCategorySection } from '@/components/menu/menu-category-section';
 import { menuData, type MenuCategory as MenuCategoryType } from '@/data/menu';
 import { Button } from '@/components/ui/button';
-import { ArrowUp, Heart, Flame, ChefHat } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 export default function HomePage() {
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -23,7 +23,9 @@ export default function HomePage() {
       setFilteredMenuData(menuData);
       if (menuData.length > 0) {
         if (activeCategoryId !== menuData[0].id) {
-          setActiveCategoryId(menuData[0].id);
+          // Explicitly set to the first category when search is cleared or on initial load
+          // This helps ensure the first category is active if observer hasn't run or picked another
+           setActiveCategoryId(menuData[0].id);
         }
       } else {
         if (activeCategoryId !== null) {
@@ -145,9 +147,9 @@ export default function HomePage() {
           <div className="p-4 mb-6 border rounded-md bg-card shadow-sm text-card-foreground">
             <h3 className="text-lg font-headline mb-2 text-primary">Legend</h3>
             <ul className="list-none space-y-1 text-sm">
-              <li className="flex items-center"><Heart className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" /> Healthy</li>
-              <li className="flex items-center"><Flame className="h-4 w-4 text-red-500 mr-2 flex-shrink-0" /> Spicy</li>
-              <li className="flex items-center"><ChefHat className="h-4 w-4 text-blue-500 mr-2 flex-shrink-0" /> Chef Special</li>
+              <li className="flex items-center"><span className="mr-2 text-lg">💚</span> Healthy</li>
+              <li className="flex items-center"><span className="mr-2 text-lg">🔥</span> Spicy</li>
+              <li className="flex items-center"><span className="mr-2 text-lg">👨‍🍳</span> Chef Special</li>
             </ul>
           </div>
 
