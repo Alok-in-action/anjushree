@@ -20,16 +20,16 @@ export function CategoryNav({ categories, activeCategoryId, onSelectCategory }: 
       if (activeButton) {
         activeButton.scrollIntoView({
           behavior: 'smooth',
-          inline: 'center', 
-          block: 'nearest',   
+          inline: 'nearest', 
+          block: 'nearest',
         });
       }
     }
   }, [activeCategoryId]);
 
   return (
-    <nav 
-      ref={scrollContainerRef} 
+    <nav
+      ref={scrollContainerRef}
       className="overflow-x-auto whitespace-nowrap py-3 px-4 bg-background border-b border-border"
       aria-label="Menu categories"
     >
@@ -43,8 +43,8 @@ export function CategoryNav({ categories, activeCategoryId, onSelectCategory }: 
             onClick={() => onSelectCategory(category.id)}
             className={cn(
               "flex-shrink-0 items-center gap-2 px-3 py-1.5 h-auto text-sm rounded-full transition-colors duration-200",
-              activeCategoryId === category.id 
-                ? 'bg-accent text-accent-foreground hover:bg-accent/90' 
+              activeCategoryId === category.id
+                ? 'bg-accent text-accent-foreground hover:bg-accent/90'
                 : 'text-foreground hover:bg-accent/50 hover:text-accent-foreground',
               "font-headline"
             )}
