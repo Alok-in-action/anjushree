@@ -134,7 +134,7 @@ export default function HomePage() {
         </div>
         
         <main className="container mx-auto px-4 py-6">
-          <Accordion type="single" collapsible className="mb-6 w-full" defaultValue="item-1">
+          <Accordion type="single" collapsible className="mb-6 w-full">
             <AccordionItem value="item-1" className="border rounded-md bg-card shadow-sm text-card-foreground">
               <AccordionTrigger className="p-4 text-lg font-headline text-primary hover:no-underline">
                 Important Information
