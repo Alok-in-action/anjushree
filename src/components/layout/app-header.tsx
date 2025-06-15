@@ -7,7 +7,7 @@ export function AppHeader() {
       <div className="container mx-auto flex h-full items-center justify-center px-4">
         <Link href="/" className="flex items-center">
           <Image
-            src="https://placehold.co/150x50.png"
+            src="/logo.png"
             alt="Aroma Flavors Logo"
             width={150}
             height={50}
