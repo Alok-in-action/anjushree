@@ -18,7 +18,7 @@ export function MenuItemCard({ item }: MenuItemCardProps) {
   }
 
   return (
-    <Card className="flex flex-col h-full bg-card text-card-foreground shadow-md hover:shadow-lg transition-shadow duration-300 rounded-lg overflow-hidden">
+    <Card className="flex flex-col h-full bg-card text-card-foreground shadow-md hover:shadow-lg transition-shadow duration-300 rounded-lg overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-400 ease-out">
       <CardHeader className="pb-3">
         <CardTitle className="font-headline text-xl text-primary flex items-center">
           <span>{item.name}</span>

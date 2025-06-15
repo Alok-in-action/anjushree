@@ -15,6 +15,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { cn } from '@/lib/utils';
 
 export default function HomePage() {
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -58,7 +59,7 @@ export default function HomePage() {
     } else {
       setActiveCategoryId(null);
     }
-  }, [searchTerm, menuData]); 
+  }, [searchTerm, menuData]); // Removed activeCategoryId from dependencies
 
   const handleSelectCategory = (categoryId: string) => {
     setActiveCategoryId(categoryId);
@@ -88,15 +89,18 @@ export default function HomePage() {
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-    const sectionsToObserve = filteredMenuData.map(category => document.getElementById(category.id)).filter(el => el);
+    // Ensure sections are only observed if they exist in the DOM
+    const sectionsToObserve = filteredMenuData
+        .map(category => document.getElementById(category.id))
+        .filter((el): el is HTMLElement => el !== null); // Type guard
     
     sectionsToObserve.forEach(section => {
-      if (section) observer.observe(section);
+       observer.observe(section);
     });
 
     return () => {
       sectionsToObserve.forEach(section => {
-        if (section) observer.unobserve(section);
+        observer.unobserve(section);
       });
     };
   }, [filteredMenuData]); 
@@ -122,7 +126,7 @@ export default function HomePage() {
     <div className="flex flex-col flex-1">
       <AppHeader />
       <div className="pt-20"> 
-        <div className="sticky top-20 z-40 bg-background shadow-lg"> 
+        <div className="sticky top-20 z-40 bg-background shadow-lg animate-in fade-in duration-300 ease-out"> 
           <CategoryNav
             categories={menuData} 
             activeCategoryId={activeCategoryId}
@@ -133,7 +137,7 @@ export default function HomePage() {
           </div>
         </div>
         
-        <main className="container mx-auto px-4 py-6">
+        <main className="container mx-auto px-4 py-6 animate-in fade-in-5 slide-in-from-bottom-2 duration-500">
           <Accordion type="single" collapsible className="mb-6 w-full">
             <AccordionItem value="item-1" className="border rounded-md bg-card shadow-sm text-card-foreground">
               <AccordionTrigger className="p-4 text-lg font-headline text-primary hover:no-underline">
@@ -176,16 +180,17 @@ export default function HomePage() {
           )}
         </main>
       </div>
-      {showScrollTop && (
-        <Button
-            onClick={scrollToTop}
-            className="fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full p-0 shadow-lg"
-            variant="default"
-            aria-label="Scroll to top"
-        >
-          <ArrowUp className="h-6 w-6" />
-        </Button>
-      )}
+      <Button
+          onClick={scrollToTop}
+          className={cn(
+            "fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full p-0 shadow-lg transition-opacity duration-300 ease-in-out",
+            showScrollTop ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          )}
+          variant="default"
+          aria-label="Scroll to top"
+      >
+        <ArrowUp className="h-6 w-6" />
+      </Button>
     </div>
   );
 }
