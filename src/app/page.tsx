@@ -103,7 +103,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex flex-col flex-1"> {/* Changed min-h-screen to flex-1 to work with layout footer */}
+    <div className="flex flex-col flex-1">
       <AppHeader />
       <div className="pt-20"> 
         <div className="sticky top-20 z-40 bg-background shadow-lg"> 
@@ -118,6 +118,17 @@ export default function HomePage() {
         </div>
         
         <main className="container mx-auto px-4 py-6">
+          <div className="p-4 mb-6 border rounded-md bg-card shadow-sm text-card-foreground">
+            <h3 className="text-lg font-headline mb-2 text-primary">Important Information</h3>
+            <ul className="list-disc list-inside space-y-1 text-sm">
+              <li>Please inform our associate in case you are allergic to any specific food ingredients.</li>
+              <li>Once order is placed, please allow us 20-25 minutes to prepare.</li>
+              <li>Additional time may be indicated for bulk orders.</li>
+              <li>Jain option is available but requested to communicate with server.</li>
+            </ul>
+            <p className="mt-3 text-sm">Government Taxes as applicable.</p>
+          </div>
+
           {filteredMenuData.length > 0 ? (
             filteredMenuData.map((category) => (
               <MenuCategorySection
