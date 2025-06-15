@@ -137,11 +137,10 @@ export default function HomePage() {
           <Accordion type="single" collapsible className="mb-6 w-full" defaultValue="item-1">
             <AccordionItem value="item-1" className="border rounded-md bg-card shadow-sm text-card-foreground">
               <AccordionTrigger className="p-4 text-lg font-headline text-primary hover:no-underline">
-                Important Information & Legend
+                Important Information
               </AccordionTrigger>
               <AccordionContent className="p-4 pt-0">
                 <div className="mb-4">
-                  <h4 className="text-md font-headline mb-2 text-primary-focus">Legend:</h4>
                   <ul className="list-none space-y-1 text-sm">
                     <li className="flex items-center"><span className="mr-2 text-lg">💚</span> Healthy</li>
                     <li className="flex items-center"><span className="mr-2 text-lg">🔥</span> Spicy</li>
