@@ -9,6 +9,12 @@ import { MenuCategorySection } from '@/components/menu/menu-category-section';
 import { menuData, type MenuCategory as MenuCategoryType } from '@/data/menu';
 import { Button } from '@/components/ui/button';
 import { ArrowUp } from 'lucide-react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default function HomePage() {
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -22,13 +28,10 @@ export default function HomePage() {
 
     if (!lowerSearchTerm) {
       setFilteredMenuData(menuData);
-      // When search is cleared:
-      // If no active category, or current one is not in full menuData, default to the first.
-      // Otherwise, keep current activeCategoryId (observer or click might have set it).
       const currentActiveStillValidInFullMenu = menuData.some(cat => cat.id === activeCategoryId);
       if ((!activeCategoryId || !currentActiveStillValidInFullMenu) && menuData.length > 0) {
         setActiveCategoryId(menuData[0].id);
-      } else if (menuData.length === 0) { // No menu data at all
+      } else if (menuData.length === 0) {
         setActiveCategoryId(null);
       }
       return;
@@ -47,8 +50,6 @@ export default function HomePage() {
     
     setFilteredMenuData(filtered);
 
-    // After filtering, if the current activeCategoryId is no longer in filtered list,
-    // set active to the first of the filtered, or null if no results.
     if (filtered.length > 0) {
       const currentActiveCategoryIsInFiltered = filtered.some(c => c.id === activeCategoryId);
       if (!currentActiveCategoryIsInFiltered) {
@@ -57,8 +58,6 @@ export default function HomePage() {
     } else {
       setActiveCategoryId(null);
     }
-  // menuData is effectively static here but included for completeness if it were dynamic.
-  // activeCategoryId is an output of this effect logic, not an input for re-filtering.
   }, [searchTerm, menuData]); 
 
   const handleSelectCategory = (categoryId: string) => {
@@ -89,7 +88,6 @@ export default function HomePage() {
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-    // Ensure we are observing sections from the currently filtered data
     const sectionsToObserve = filteredMenuData.map(category => document.getElementById(category.id)).filter(el => el);
     
     sectionsToObserve.forEach(section => {
@@ -101,7 +99,7 @@ export default function HomePage() {
         if (section) observer.unobserve(section);
       });
     };
-  }, [filteredMenuData]); // Observe based on the filtered data
+  }, [filteredMenuData]); 
 
   // Effect for showing/hiding scroll-to-top button
   React.useEffect(() => {
@@ -126,7 +124,7 @@ export default function HomePage() {
       <div className="pt-20"> 
         <div className="sticky top-20 z-40 bg-background shadow-lg"> 
           <CategoryNav
-            categories={menuData} // Pass full menuData for nav, activeId will sync with filtered view
+            categories={menuData} 
             activeCategoryId={activeCategoryId}
             onSelectCategory={handleSelectCategory}
           />
@@ -136,26 +134,31 @@ export default function HomePage() {
         </div>
         
         <main className="container mx-auto px-4 py-6">
-          <div className="p-4 mb-6 border rounded-md bg-card shadow-sm text-card-foreground">
-            <h3 className="text-lg font-headline mb-2 text-primary">Important Information</h3>
-            <ul className="list-disc list-inside space-y-1 text-sm">
-              <li>Please inform our associate in case you are allergic to any specific food ingredients.</li>
-              <li>Once order is placed, please allow us 20-25 minutes to prepare.</li>
-              <li>Additional time may be indicated for bulk orders.</li>
-              <li>Jain option is available but requested to communicate with server.</li>
-              <li>Our Standard Measure - 30Ml (for beverages).</li>
-            </ul>
-            <p className="mt-3 text-sm">Government Taxes as applicable.</p>
-          </div>
-
-          <div className="p-4 mb-6 border rounded-md bg-card shadow-sm text-card-foreground">
-            <h3 className="text-lg font-headline mb-2 text-primary">Legend</h3>
-            <ul className="list-none space-y-1 text-sm">
-              <li className="flex items-center"><span className="mr-2 text-lg">💚</span> Healthy</li>
-              <li className="flex items-center"><span className="mr-2 text-lg">🔥</span> Spicy</li>
-              <li className="flex items-center"><span className="mr-2 text-lg">👨‍🍳</span> Chef Special</li>
-            </ul>
-          </div>
+          <Accordion type="single" collapsible className="mb-6 w-full" defaultValue="item-1">
+            <AccordionItem value="item-1" className="border rounded-md bg-card shadow-sm text-card-foreground">
+              <AccordionTrigger className="p-4 text-lg font-headline text-primary hover:no-underline">
+                Important Information & Legend
+              </AccordionTrigger>
+              <AccordionContent className="p-4 pt-0">
+                <div className="mb-4">
+                  <h4 className="text-md font-headline mb-2 text-primary-focus">Legend:</h4>
+                  <ul className="list-none space-y-1 text-sm">
+                    <li className="flex items-center"><span className="mr-2 text-lg">💚</span> Healthy</li>
+                    <li className="flex items-center"><span className="mr-2 text-lg">🔥</span> Spicy</li>
+                    <li className="flex items-center"><span className="mr-2 text-lg">👨‍🍳</span> Chef Special</li>
+                  </ul>
+                </div>
+                <ul className="list-disc list-inside space-y-1 text-sm">
+                  <li>Please inform our associate in case you are allergic to any specific food ingredients.</li>
+                  <li>Once order is placed, please allow us 20-25 minutes to prepare.</li>
+                  <li>Additional time may be indicated for bulk orders.</li>
+                  <li>Jain option is available but requested to communicate with server.</li>
+                  <li>Our Standard Measure - 30Ml (for beverages).</li>
+                </ul>
+                <p className="mt-3 text-sm">Government Taxes as applicable.</p>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
 
           {filteredMenuData.length > 0 ? (
             filteredMenuData.map((category) => (
