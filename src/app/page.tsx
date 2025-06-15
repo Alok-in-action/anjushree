@@ -18,15 +18,27 @@ export default function HomePage() {
 
   React.useEffect(() => {
     const lowerSearchTerm = searchTerm.toLowerCase();
-    if (!lowerSearchTerm) {
+
+    if (!lowerSearchTerm) { // Case: search is empty (initial load or cleared)
       setFilteredMenuData(menuData);
-      // If clearing search, reset active category to the first overall category if it exists
-      if (menuData.length > 0 && activeCategoryId !== menuData[0].id) {
-         // setActiveCategoryId(menuData[0].id); // Commented out to prevent jump on clear
+      // Ensure 'activeCategoryId' is set to the first category from the full 'menuData'.
+      // This will correct any overrides by the IntersectionObserver if the page loaded
+      // in a way that a different category was initially intersecting.
+      if (menuData.length > 0) {
+        // Only call setActiveCategoryId if it's not already the correct one, to avoid potential loops/extra renders.
+        if (activeCategoryId !== menuData[0].id) {
+          setActiveCategoryId(menuData[0].id);
+        }
+      } else {
+        // If menuData is empty, ensure activeCategoryId is null.
+        if (activeCategoryId !== null) {
+          setActiveCategoryId(null);
+        }
       }
-      return;
+      return; // Early return after handling the empty search term case.
     }
 
+    // Case: search term is present
     const filtered = menuData
       .map(category => ({
         ...category,
@@ -39,12 +51,23 @@ export default function HomePage() {
       .filter(category => category.items.length > 0);
     
     setFilteredMenuData(filtered);
-    if (filtered.length > 0 && !filtered.find(c => c.id === activeCategoryId)) {
-      setActiveCategoryId(filtered[0].id);
-    } else if (filtered.length === 0) {
-      setActiveCategoryId(null);
+
+    // After filtering, if the current 'activeCategoryId' is not in the 'filtered' list,
+    // or if 'activeCategoryId' was null, set it to the first category in 'filtered'.
+    // If 'filtered' is empty, set 'activeCategoryId' to null.
+    if (filtered.length > 0) {
+      const currentActiveCategoryIsInFiltered = filtered.some(c => c.id === activeCategoryId);
+      if (!currentActiveCategoryIsInFiltered) {
+        setActiveCategoryId(filtered[0].id);
+      }
+      // If currentActiveCategoryIsInFiltered is true, we don't change activeCategoryId here.
+      // The IntersectionObserver will handle updates based on scroll for already visible categories.
+    } else { // No items in filtered results
+      if (activeCategoryId !== null) {
+        setActiveCategoryId(null);
+      }
     }
-  }, [searchTerm, activeCategoryId]);
+  }, [searchTerm, menuData, activeCategoryId]); // menuData is stable, activeCategoryId is read and conditionally set.
 
   const handleSelectCategory = (categoryId: string) => {
     setActiveCategoryId(categoryId);
