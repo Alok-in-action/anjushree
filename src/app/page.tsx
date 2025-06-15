@@ -16,23 +16,22 @@ export default function HomePage() {
   const [activeCategoryId, setActiveCategoryId] = React.useState<string | null>(menuData[0]?.id || null);
   const [showScrollTop, setShowScrollTop] = React.useState(false);
 
+  // Effect for filtering based on search term
   React.useEffect(() => {
     const lowerSearchTerm = searchTerm.toLowerCase();
 
-    if (!lowerSearchTerm) { 
+    if (!lowerSearchTerm) {
       setFilteredMenuData(menuData);
-      if (menuData.length > 0) {
-        if (activeCategoryId !== menuData[0].id) {
-          // Explicitly set to the first category when search is cleared or on initial load
-          // This helps ensure the first category is active if observer hasn't run or picked another
-           setActiveCategoryId(menuData[0].id);
-        }
-      } else {
-        if (activeCategoryId !== null) {
-          setActiveCategoryId(null);
-        }
+      // When search is cleared:
+      // If no active category, or current one is not in full menuData, default to the first.
+      // Otherwise, keep current activeCategoryId (observer or click might have set it).
+      const currentActiveStillValidInFullMenu = menuData.some(cat => cat.id === activeCategoryId);
+      if ((!activeCategoryId || !currentActiveStillValidInFullMenu) && menuData.length > 0) {
+        setActiveCategoryId(menuData[0].id);
+      } else if (menuData.length === 0) { // No menu data at all
+        setActiveCategoryId(null);
       }
-      return; 
+      return;
     }
 
     const filtered = menuData
@@ -48,17 +47,19 @@ export default function HomePage() {
     
     setFilteredMenuData(filtered);
 
+    // After filtering, if the current activeCategoryId is no longer in filtered list,
+    // set active to the first of the filtered, or null if no results.
     if (filtered.length > 0) {
       const currentActiveCategoryIsInFiltered = filtered.some(c => c.id === activeCategoryId);
       if (!currentActiveCategoryIsInFiltered) {
         setActiveCategoryId(filtered[0].id);
       }
-    } else { 
-      if (activeCategoryId !== null) {
-        setActiveCategoryId(null);
-      }
+    } else {
+      setActiveCategoryId(null);
     }
-  }, [searchTerm, activeCategoryId]); 
+  // menuData is effectively static here but included for completeness if it were dynamic.
+  // activeCategoryId is an output of this effect logic, not an input for re-filtering.
+  }, [searchTerm, menuData]); 
 
   const handleSelectCategory = (categoryId: string) => {
     setActiveCategoryId(categoryId);
@@ -66,11 +67,12 @@ export default function HomePage() {
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
-        block: 'start', 
+        block: 'start',
       });
     }
   };
 
+  // Effect for IntersectionObserver to update active category on scroll
   React.useEffect(() => {
     const observerOptions = {
       root: null,
@@ -87,19 +89,21 @@ export default function HomePage() {
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-    const currentSections = filteredMenuData.map(category => document.getElementById(category.id)).filter(el => el);
+    // Ensure we are observing sections from the currently filtered data
+    const sectionsToObserve = filteredMenuData.map(category => document.getElementById(category.id)).filter(el => el);
     
-    currentSections.forEach(section => {
+    sectionsToObserve.forEach(section => {
       if (section) observer.observe(section);
     });
 
     return () => {
-      currentSections.forEach(section => {
+      sectionsToObserve.forEach(section => {
         if (section) observer.unobserve(section);
       });
     };
-  }, [filteredMenuData]);
+  }, [filteredMenuData]); // Observe based on the filtered data
 
+  // Effect for showing/hiding scroll-to-top button
   React.useEffect(() => {
     const checkScrollTop = () => {
       if (!showScrollTop && window.pageYOffset > 400){
@@ -122,7 +126,7 @@ export default function HomePage() {
       <div className="pt-20"> 
         <div className="sticky top-20 z-40 bg-background shadow-lg"> 
           <CategoryNav
-            categories={menuData} 
+            categories={menuData} // Pass full menuData for nav, activeId will sync with filtered view
             activeCategoryId={activeCategoryId}
             onSelectCategory={handleSelectCategory}
           />
