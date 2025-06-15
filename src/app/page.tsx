@@ -148,11 +148,11 @@ export default function HomePage() {
                   </ul>
                 </div>
                 <ul className="list-disc list-inside space-y-1 text-sm">
+                  <li>Our Standard Measure - 30Ml (for beverages).</li>
                   <li>Please inform our associate in case you are allergic to any specific food ingredients.</li>
                   <li>Once order is placed, please allow us 20-25 minutes to prepare.</li>
                   <li>Additional time may be indicated for bulk orders.</li>
                   <li>Jain option is available but requested to communicate with server.</li>
-                  <li>Our Standard Measure - 30Ml (for beverages).</li>
                 </ul>
                 <p className="mt-3 text-sm">Government Taxes as applicable.</p>
               </AccordionContent>
