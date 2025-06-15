@@ -9,8 +9,8 @@ export function AppHeader() {
           <Image
             src="/logo.png"
             alt="Aroma Flavors Logo"
-            width={150}
-            height={50}
+            width={180}
+            height={60}
             data-ai-hint="restaurant logo"
             priority
           />
